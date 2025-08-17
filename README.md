@@ -48,11 +48,11 @@ A UI é “soft” (preto & branco) e usa classes globais reutilizáveis:
 
 ## 🗂️ Estrutura (essencial)
 
-src/
-app/
-app.component.ts # lógica (FormBuilder, ações, localStorage)
-app.component.html # template (lista, botões, formulário)
-app.component.css # (opcional) – mantemos estilos no global
-model/
-todo.model.ts # interface Todo { id, title, done }
-styles.css # estilos globais (tokens, cards, botões, etc.)
+ - src/
+- app/
+- app.component.ts # lógica (FormBuilder, ações, localStorage)
+- app.component.html # template (lista, botões, formulário)
+- app.component.css # (opcional) – mantemos estilos no global
+- model/
+- todo.model.ts # interface Todo { id, title, done }
+- styles.css # estilos globais (tokens, cards, botões, etc.)
