@@ -19,10 +19,7 @@ export class AppComponent {
         Validators.required
       ])]
     });
-
-    this.todos.push({ id: 1, title: 'estudar angular', done: false });
-    this.todos.push({ id: 2, title: 'ir a academia', done: false });
-    this.todos.push({ id: 3, title: 'tomar 5 litros de água', done: true });
+    this.load();
   }
 
   add() {
@@ -30,21 +27,50 @@ export class AppComponent {
     const id = this.todos.length + 1;
     this.todos.push({ id, title, done: false });
     this.form.reset();
+    this.save();
+    this.clear();
+  }
+
+  clear() {
+    this.form.reset();
   }
 
   remover(todo: Todo) {
     const index = this.todos.indexOf(todo);
     if (index !== -1) {
       this.todos.splice(index, 1);
+    this.save();
+
     }
   }
 
   markAsDone(todo: Todo) {
     todo.done = true;
+    this.save();
+
   }
 
   markAsUnDone(todo: Todo) {
     todo.done = false;
+    this.save();
   }
+
+  save(){
+    const data = JSON.stringify(this.todos);
+    localStorage.setItem('todos', data);
+    
+  }
+
+  load() {
+    const data = localStorage.getItem('todos');
+    if(data){
+      this.todos = JSON.parse(data);
+    }else{
+      this.todos = [];
+    }
+  }
+
+
+
 
 }

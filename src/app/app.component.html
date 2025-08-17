@@ -1,22 +1,32 @@
-<h1>{{title}}</h1>
+<div class="container">
+  <h1>{{title}}</h1>
 
-<ul>
-  <li *ngFor="let todo of todos">{{todo.id}}
-    .{{todo.title}}
-    || <button *ngIf="!todo.done" (click)="markAsDone(todo)">concluir</button> 
-       <button *ngIf="todo.done" (click)="markAsUnDone(todo)">refazer</button> 
-    || <button (click)="remover(todo)">remover</button></li>
-</ul>
+  <ul>
+    <p *ngIf="todos.length === 0"><small>você ainda não tem tarefas cadastradas!</small></p>
+    <li *ngFor="let todo of todos" class="card" [class.done]="todo.done">
+      <div style="display:flex;gap:.5rem;align-items:baseline;margin-bottom:.5rem;">
+        <span style="color:#777;font-size:.86rem;">{{todo.id}}.</span>
+        <span class="todo-title">{{todo.title}}</span>
+      </div>
+      <div style="display:flex;gap:.5rem;flex-wrap:wrap;">
+        <button *ngIf="!todo.done" class="btn" (click)="markAsDone(todo)">concluir</button>
+        <button *ngIf="todo.done"  class="btn" (click)="markAsUnDone(todo)">refazer</button>
+        <button class="btn btn-ghost" (click)="remover(todo)">remover</button>
+      </div>
+    </li>
+  </ul>
 
-<form [formGroup]="form">
-   <fieldset>
-    <legend>Adicionar nova tarefa</legend>
-    <label>Título: </label>
-  <input type="text"
-          placeholder="titulo da tarefa"
-          maxlength="60"
-          formControlName="title">
-          <small  *ngIf = "form.controls.title.invalid && !form.controls.title.pristine">Este campo deve conter entre 3 e 60 caracteres</small>
-    <button [disabled] ="form.invalid">Adicionar</button>
-   </fieldset>
-</form>
+  <form [formGroup]="form">
+    <fieldset class="card" style="padding:1rem;">
+      <legend>Adicionar nova tarefa</legend>
+      <label for="title">Título:</label>
+      <input id="title" type="text" class="input" maxlength="60" placeholder="Título da tarefa" formControlName="title" />
+      <small class="error" *ngIf="form.controls.title.invalid && (form.controls.title.dirty || form.controls.title.touched)">
+        Este campo deve conter entre 3 e 60 caracteres
+      </small>
+      <div style="margin-top:.6rem;">
+        <button class="btn" [disabled]="form.invalid" (click)="add()">Adicionar</button>
+      </div>
+    </fieldset>
+  </form>
+</div>
