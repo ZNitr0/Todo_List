@@ -1,0 +1,9 @@
+/* Só o que é específico deste componente */
+ul { list-style: none; padding: 0; margin: 0 0 1.25rem; }
+ul > li { padding: .9rem 1rem; margin-bottom: .8rem; } /* o "card" já vem do global */
+
+ul > li.done .todo-title { text-decoration: line-through; opacity: .65; }
+ul > li:hover { transform: translateY(-1px); box-shadow: 0 6px 14px rgba(0,0,0,.08); transition: box-shadow .2s, transform .2s; }
+
+h1 { text-align: center; font-weight: 700; font-size: 2rem; margin: 0 0 1rem; }
+.error { color: #b00020; }

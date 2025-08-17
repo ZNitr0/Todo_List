@@ -1,1 +1,25 @@
-/* You can add global styles to this file, and also import other style files */
+/* Base */
+* { box-sizing: border-box; }
+body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; background:#e9eaec; color:#111; }
+
+/* Tokens */
+:root {
+  --page-max: 760px;
+  --page-pad: 1rem;
+  --radius: 12px;
+  --shadow: 0 1px 3px rgba(0,0,0,.05);
+}
+
+/* Layout reutilizável */
+.container { max-width: var(--page-max); margin: 2.5rem auto; padding: 0 var(--page-pad); }
+
+/* Blocos (cards), botões e inputs reutilizáveis */
+.card { background:#fff; border:1px solid #eaeaea; border-radius:var(--radius); box-shadow:var(--shadow); }
+.btn  { border:1px solid #222; background:#111; color:#fff; padding:.42rem .84rem; border-radius:10px; cursor:pointer; font-size:.86rem; line-height:1; transition:transform .08s ease, background-color .2s, box-shadow .2s; }
+.btn:hover   { background:#2b2b2b; box-shadow:0 2px 10px rgba(0,0,0,.18); }
+.btn:active  { transform: translateY(1px) scale(.985); }
+.btn-ghost   { background:#fff; color:#111; border-color:#cfcfcf; }
+.btn-ghost:hover { background:#f5f5f5; }
+
+.input { width:100%; padding:.55rem .65rem; border:1px solid #dcdcdc; border-radius:10px; background:#fff; transition:border-color .2s, box-shadow .2s; }
+.input:focus { border-color:#111; box-shadow:0 0 0 3px rgba(0,0,0,.08); outline:none; }
