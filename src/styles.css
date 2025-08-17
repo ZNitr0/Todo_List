@@ -1,9 +1,10 @@
 /* ===== Base / Tokens ===== */
 body { margin: 0; background: #e5e5e5; }
-:root { --page-max: 860px; } /* largura  do conteúdo */
+:root { --page-pad: 16px; }
+.container { max-width: var(--page-max); margin: 0 auto; padding: 0 var(--page-pad); }
 
 /* ===== Lista ===== */
-.todo-list { text-align: center;list-style: none; padding: 0; margin: 0; }
+.todo-list { text-align: center; list-style: none; padding: 0; margin: 0; }
 
 /* ===== Card genérico (visível) ===== */
 .card {
@@ -61,9 +62,39 @@ body { margin: 0; background: #e5e5e5; }
 /* aparecer no hover e no foco por teclado */
 .card:hover .todo-actions,
 .card:focus-within .todo-actions { opacity: 1; transform: none; pointer-events: auto; }
-/* mobile/tablet (sem hover): sempre visíveis */
-@media (hover: none) {
-  .todo-actions { opacity: 1; transform: none; pointer-events: auto; }
+
+/* 1) Tablets (≤ 1024px): reduz um pouco a largura-alvo */
+@media (max-width: 1024px) {
+  :root { --page-max: 760px; }
+}
+
+/* 2) Phones / telas estreitas (≤ 640px): ocupa toda a largura, empilha input+botão */
+@media (max-width: 640px) {
+  :root { --page-max: 100%; --page-pad: 14px; }
+
+  /* cards e composer mais compactos */
+  .task { margin: 10px auto; padding: 12px 14px; border-radius: 12px; }
+  .composer { top: 12px; }
+
+  /* barra de adicionar: input em cima, botão embaixo (100% largura) */
+  .composer-row { grid-template-columns: 1fr; gap: 10px; }
+  .input-lg { height: 44px; } /* toque confortável */
+  .btn { width: 100%; justify-content: center; padding: .55rem 1rem; }
+
+  /* título e meta com respiro adequado */
+  .todo-head { gap: 8px; margin-bottom: 6px; }
+  .todo-title { font-size: 1rem; line-height: 1.35; }
+  .todo-num   { font-size: .9rem; margin-top: .1rem; }
+  .todo-meta  { font-size: .9rem; margin-top: 4px; }
+
+  /* ações sempre alinhadas à esquerda no mobile, com bom espaçamento */
+  .todo-actions { justify-content: flex-start; gap: 10px; min-height: 36px; }
+  /* (Você já tem @media (hover:none) deixando as ações visíveis no toque) */
+}
+
+/* 3) Muito estreito (≤ 380px): evita barra fixa atrapalhar a rolagem */
+@media (max-width: 380px) {
+  .composer { position: static; top: auto; }
 }
 
 /* Botões soft (pill) */
