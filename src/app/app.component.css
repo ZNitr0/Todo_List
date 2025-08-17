@@ -1,9 +1,83 @@
-/* Só o que é específico deste componente */
-ul { list-style: none; padding: 0; margin: 0 0 1.25rem; }
-ul > li { padding: .9rem 1rem; margin-bottom: .8rem; } /* o "card" já vem do global */
 
-ul > li.done .todo-title { text-decoration: line-through; opacity: .65; }
-ul > li:hover { transform: translateY(-1px); box-shadow: 0 6px 14px rgba(0,0,0,.08); transition: box-shadow .2s, transform .2s; }
+:host {
+ --title-font: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;    
+                          
+}
 
-h1 { text-align: center; font-weight: 700; font-size: 2rem; margin: 0 0 1rem; }
-.error { color: #b00020; }
+.page-title {
+  font-family: var(--title-font);
+  font-weight: 800;
+  font-size: 2.6rem;     /* ajuste livre: 2.2–2.8rem */
+  line-height: 1.1;
+  letter-spacing: .2px;
+  text-align: center;
+  margin: 1.1rem 0 .5rem;
+ 
+}
+
+/* Subtítulo */
+.page-subtitle {
+  text-align: center;
+  color: #4b5563;        /* cinza médio */
+  font-size: 1.05rem;
+  margin: 0 0 .25rem;
+}
+
+/* 3) Composer: elevação quando em uso (focus-within) */
+.composer {
+  transition: box-shadow .2s ease, transform .2s ease;
+}
+.composer:focus-within {
+  box-shadow: 0 18px 40px rgba(0,0,0,.12);
+  transform: translateY(-1px);
+}
+/* foco bonito nos controles do composer */
+.composer :where(.input, .btn):focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--ring);
+}
+
+/* 4) Animação de entrada dos cards (leve e rápida) */
+.task {
+  animation: task-pop .22s ease;
+}
+@keyframes task-pop {
+  from { opacity: 0; transform: translateY(4px) scale(.995); }
+  to   { opacity: 1; transform: translateY(0)  scale(1); }
+}
+
+/* 5) Badge “Concluída” no canto do card quando done */
+.task.done { position: relative; }
+.task.done::after {
+  content: "Concluída";
+  position: absolute; top: 10px; right: 12px;
+  font-size: .72rem;
+  padding: .18rem .5rem;
+  border-radius: 999px;
+  background: #eef2ff;                /* combina com o accent */
+  color: #3730a3;
+  border: 1px solid #dde3ff;
+}
+
+/* 6) Foco visível também nas ações (acessibilidade) */
+.todo-actions .btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--ring);
+}
+
+/* 7) Responsivo: composer em coluna em telas estreitas */
+@media (max-width: 560px) {
+  .composer .composer-row {
+    grid-template-columns: 1fr;       /* input em cima, botão embaixo */
+    gap: 10px;
+  }
+  .todo-actions { justify-content: flex-start; }
+}
+
+/* 8) Respeito a usuários com redução de movimento */
+@media (prefers-reduced-motion: reduce) {
+  .task { animation: none; }
+  .composer { transition: none; }
+}
+
+

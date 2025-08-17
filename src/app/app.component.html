@@ -1,32 +1,56 @@
 <div class="container">
-  <h1>{{title}}</h1>
+<h1 class="page-title">{{ title }}</h1>
+<p class="page-subtitle">Organize suas tarefas de forma simples e eficiente</p>
 
-  <ul>
-    <p *ngIf="todos.length === 0"><small>você ainda não tem tarefas cadastradas!</small></p>
-    <li *ngFor="let todo of todos" class="card" [class.done]="todo.done">
-      <div style="display:flex;gap:.5rem;align-items:baseline;margin-bottom:.5rem;">
-        <span style="color:#777;font-size:.86rem;">{{todo.id}}.</span>
-        <span class="todo-title">{{todo.title}}</span>
+
+  <!-- Barra de adicionar (menor e fixa) -->
+  <form [formGroup]="form">
+    <fieldset class="card task composer">
+      <legend class="visually-hidden">Adicionar nova tarefa</legend>
+
+      <div class="composer-row">
+        <input id="title"
+               type="text"
+               class="input input-lg"
+               maxlength="60"
+               placeholder="Digite uma nova tarefa..."
+               formControlName="title" />
+
+        <button class="btn" type="button" [disabled]="form.invalid" (click)="add()">Adicionar</button>
       </div>
-      <div style="display:flex;gap:.5rem;flex-wrap:wrap;">
+
+      <small class="error"
+             *ngIf="form.controls.title.invalid && (form.controls.title.dirty || form.controls.title.touched)">
+        Este campo deve conter entre 3 e 60 caracteres
+      </small>
+    </fieldset>
+  </form>
+
+  <ul class="todo-list">
+    <p *ngIf="todos.length === 0"><small>você ainda não tem tarefas cadastradas!</small></p>
+
+    <li *ngFor="let todo of todos; let i = index"
+    class="card task"
+    [class.done]="todo.done"
+    tabindex="0">
+
+
+      <div class="todo-head">
+        <span class="todo-num">{{ i + 1 }}.</span>
+        <div>
+          <div class="todo-title">{{ todo.title }}</div>
+          <!-- mostra a data/hora em que foi criada -->
+          <div class="todo-meta" *ngIf="todo.createdAt">
+            {{ todo.createdAt | date:"dd/MM/yyyy 'às' HH:mm" }}
+          </div>
+        </div>
+      </div>
+
+      <div class="todo-actions">
         <button *ngIf="!todo.done" class="btn" (click)="markAsDone(todo)">concluir</button>
         <button *ngIf="todo.done"  class="btn" (click)="markAsUnDone(todo)">refazer</button>
         <button class="btn btn-ghost" (click)="remover(todo)">remover</button>
       </div>
     </li>
   </ul>
-
-  <form [formGroup]="form">
-    <fieldset class="card" style="padding:1rem;">
-      <legend>Adicionar nova tarefa</legend>
-      <label for="title">Título:</label>
-      <input id="title" type="text" class="input" maxlength="60" placeholder="Título da tarefa" formControlName="title" />
-      <small class="error" *ngIf="form.controls.title.invalid && (form.controls.title.dirty || form.controls.title.touched)">
-        Este campo deve conter entre 3 e 60 caracteres
-      </small>
-      <div style="margin-top:.6rem;">
-        <button class="btn" [disabled]="form.invalid" (click)="add()">Adicionar</button>
-      </div>
-    </fieldset>
-  </form>
 </div>

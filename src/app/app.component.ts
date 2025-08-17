@@ -17,19 +17,26 @@ export class AppComponent {
         Validators.minLength(3),
         Validators.maxLength(60),
         Validators.required
-      ])]
+        
+      ])],
+        dueDate: [''],
+        dueTime: ['']
     });
     this.load();
   }
+add() {
+  const raw = this.form.controls['title'] && this.form.controls['title'].value ? this.form.controls['title'].value : '';
+  const title = raw.toString().trim();
+  if (!title) { return; }
 
-  add() {
-    const title = this.form.controls['title'].value;
-    const id = this.todos.length + 1;
-    this.todos.push({ id, title, done: false });
-    this.form.reset();
-    this.save();
-    this.clear();
-  }
+  const id = this.todos.length + 1;
+  const createdAt = Date.now();  // <- registra o momento da criação
+
+  this.todos.push({ id, title, done: false, createdAt });
+  this.save();
+  this.form.reset();
+}
+
 
   clear() {
     this.form.reset();
