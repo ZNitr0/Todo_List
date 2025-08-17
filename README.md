@@ -1,27 +1,58 @@
-# Todo
+# Todo List (Angular)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.10.
+Um Todo List simples para uso diário e primeiro contato com **Angular** — com UI limpa em preto & branco, persistência em **localStorage** e validação básica de formulário.
 
-## Development server
+- **Live:** https://todo-list-ln.vercel.app/  
+- **Repositório:** https://github.com/ZNitr0/Todo_List
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+---
 
-## Code scaffolding
+## ✨ Funcionalidades
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- Adicionar tarefas (validação: **3–60** caracteres)
+- Marcar como **concluída** e **refazer**
+- **Remover** tarefas
+- Numeração visual **1., 2., 3…** (sem exibir o id interno)
+- Persistência em **localStorage**
+- Layout **soft e centralizado** com _cards_ e botões (PB)
 
-## Build
+---
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+## 🧰 Stack
 
-## Running unit tests
+- **Angular** (gerado com *Angular CLI 7.3.10*)
+- **TypeScript**
+- **CSS** (estilos globais em `src/styles.css`)
+- **localStorage** para persistência
+- **Vercel** (deploy)
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+> O projeto original foi criado com Angular CLI 7.3.10.
 
-## Running end-to-end tests
+---
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+## 🖼️ UI / Design
 
-## Further help
+A UI é “soft” (preto & branco) e usa classes globais reutilizáveis:
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+- `:root` com *tokens* (radius, shadow etc.)
+- `.container` para largura máxima/centralização
+- `.card` para caixas (tarefas e formulário)
+- `.btn` (primário, escuro) e `.btn-ghost` (secundário, claro)
+- `.input` para campos
+- `.task` para **cards pequenos e centralizados**
+- `.todo-*` para as partes do item (número, título, ações)
+
+> Os estilos estão em `src/styles.css`. O `app.component.css` pode ficar vazio.
+
+---
+
+## 🗂️ Estrutura (essencial)
+
+src/
+app/
+app.component.ts # lógica (FormBuilder, ações, localStorage)
+app.component.html # template (lista, botões, formulário)
+app.component.css # (opcional) – mantemos estilos no global
+model/
+todo.model.ts # interface Todo { id, title, done }
+styles.css # estilos globais (tokens, cards, botões, etc.)
