@@ -1,10 +1,15 @@
 /* ===== Base / Tokens ===== */
-body { margin: 0; background: #e5e5e5; }
-:root { --page-pad: 16px; }
+body { margin: 0; background: #e5e5e5; padding: 2.5rem 0; }
+:root { --page-pad: 16px;  --title-font: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;  }
 .container { max-width: var(--page-max); margin: 0 auto; padding: 0 var(--page-pad); }
 
-/* ===== Lista ===== */
-.todo-list { text-align: center; list-style: none; padding: 0; margin: 0; }
+
+.todo-list {  text-align:center; padding:   0; margin: 0; }
+
+.text-center{
+  text-align: center;
+}
+
 
 /* ===== Card genérico (visível) ===== */
 .card {
@@ -15,9 +20,10 @@ body { margin: 0; background: #e5e5e5; }
 
 /* ===== Task (card da tarefa + composer) ===== */
 .task {
-  max-width: 460px;
+  max-width: 480px;
   margin: 12px auto;               /* espaço entre cards */
-  padding: 14px 16px;              /* respiro interno */
+  text-align: left;                /* Alinha o conteúdo do card à esquerda */
+  padding: 10px;             
   border-radius: 14px;
 }
 .task:hover {
@@ -31,31 +37,43 @@ body { margin: 0; background: #e5e5e5; }
   position: sticky;
   top: 16px;
   z-index: 50;
-  margin: 0 auto 1rem;             /* aproxima do título */
+  margin: 0 auto 1rem;             
 }
 .composer-row {
   display: grid;
-  grid-template-columns: 1fr auto; /* input cresce, botão vai ao canto direito */
   gap: 12px;
-  align-items: center;
 }
-.input-lg { height: 42px; padding: .48rem .72rem; }
+.composer-row .btn {
+  justify-self: center; /* Centraliza o botão na horizontal */
+  padding: .45rem 2.5rem; /* Ajuste o padding horizontal (2.5rem) para o comprimento desejado */
+}
+.input-lg { height: 54px; padding-left: .9rem; padding-right: .9rem; font-size: 1rem; }
 
 /* ===== Título/numeração/meta ===== */
 .todo-head { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 6px; }
-.todo-title { font-size: 1rem; line-height: 1.35; }
+.todo-title {font-family: var(--title-font); font-size: 1rem; line-height: 1.35; }
 .todo-num   { color: #0c0c0c; font-size: .9rem; margin-top: .15rem; }
 .todo-meta  { color: #6b7280; font-size: .9rem; margin-top: 4px; }
 
-/* Concluída */
-.done .todo-title { text-decoration: line-through; opacity: .65; }
+
+.done .todo-title {
+  opacity: .65;
+}
+
+/* Adiciona o ícone de check antes do título da tarefa concluída */
+.done .todo-title::before {
+  content: '\f00c'; /* Código unicode do ícone 'check' do Font Awesome */
+  font-family: 'Font Awesome 5 Free', 'Font Awesome 5 Pro'; /* Garante que a fonte correta seja usada */
+  font-weight: 900; /* Necessário para ícones sólidos do Font Awesome 5+ */
+  color: #22c55e; /* Um tom de verde para o ícone */
+  margin-right: .5rem; /* Espaçamento entre o ícone e o texto */
+}
+
 
 /* ===== Ações (botões) ===== */
 /* alinhadas à direita + altura reservada para evitar “pulo” */
 .todo-actions {
   display: flex; gap: .5rem; flex-wrap: wrap; justify-content: flex-end;
-  min-height: 36px;
-  /* escondido por padrão em desktop, mantendo layout */
   opacity: 0; transform: translateY(2px); pointer-events: none;
   transition: opacity .18s ease, transform .18s ease;
 }
@@ -73,13 +91,12 @@ body { margin: 0; background: #e5e5e5; }
   :root { --page-max: 100%; --page-pad: 14px; }
 
   /* cards e composer mais compactos */
-  .task { margin: 10px auto; padding: 12px 14px; border-radius: 12px; }
+  .task { margin: 10px auto; padding: 10px 12px; border-radius: 12px; }
   .composer { top: 12px; }
 
-  /* barra de adicionar: input em cima, botão embaixo (100% largura) */
-  .composer-row { grid-template-columns: 1fr; gap: 10px; }
-  .input-lg { height: 44px; } /* toque confortável */
-  .btn { width: 100%; justify-content: center; padding: .55rem 1rem; }
+  /* barra de adicionar: ajustes mobile */
+  .composer-row { gap: 10px; }
+  /* A altura do .input-lg agora é definida na regra principal, não precisamos mais desta linha */
 
   /* título e meta com respiro adequado */
   .todo-head { gap: 8px; margin-bottom: 6px; }
@@ -88,7 +105,7 @@ body { margin: 0; background: #e5e5e5; }
   .todo-meta  { font-size: .9rem; margin-top: 4px; }
 
   /* ações sempre alinhadas à esquerda no mobile, com bom espaçamento */
-  .todo-actions { justify-content: flex-start; gap: 10px; min-height: 36px; }
+  .todo-actions { justify-content: center; gap: 10px; min-height: 36px; }
   /* (Você já tem @media (hover:none) deixando as ações visíveis no toque) */
 }
 
@@ -98,6 +115,14 @@ body { margin: 0; background: #e5e5e5; }
 }
 
 /* Botões soft (pill) */
-.btn { border-radius: 999px; padding: .42rem 1rem; font-size: .9rem; }
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem; /* Espaço entre ícone e texto */
+  border-radius: 999px;
+  padding: .42rem 1rem;
+  font-size: .9rem;
+}
 .btn-ghost { border-color: #d0d0d0; background:#fff; }
 button:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(0,0,0,.10); }

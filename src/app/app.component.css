@@ -1,13 +1,12 @@
-
 :host {
  --title-font: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;    
                           
 }
 
 .page-title {
-  font-family: var(--title-font);
+  font-family: var(--title-font) ;
   font-weight: 800;
-  font-size: 2.6rem;     /* ajuste livre: 2.2–2.8rem */
+  font-size: 3.8rem;     /* ajuste livre: 2.2–2.8rem */
   line-height: 1.1;
   letter-spacing: .2px;
   text-align: center;
@@ -64,19 +63,28 @@
   box-shadow: 0 0 0 3px var(--ring);
 }
 
-
-@media (max-width: 560px) {
-  .composer .composer-row {
-    grid-template-columns: 1fr;       /* input em cima, botão embaixo */
-    gap: 10px;
-  }
-  .todo-actions { justify-content: flex-start; }
-}
-
 /* 8) Respeito a usuários com redução de movimento */
 @media (prefers-reduced-motion: reduce) {
   .task { animation: none; }
   .composer { transition: none; }
 }
 
+/* Container para o botão flutuante (FAB - Floating Action Button) */
+.fab-container {
+  position: relative;
+  bottom: 0rem;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  pointer-events: none; /* Permite cliques "através" do container */
+  z-index: 1000;
+}
 
+/* Estilo específico para o botão flutuante, tornando-o maior e mais destacado */
+.fab {
+  pointer-events: auto; /* Restaura os eventos de clique no botão */
+  padding: .8rem 1.5rem;
+  font-size: 1rem;
+  box-shadow: 0 8px 20px rgba(0,0,0,.1);
+}

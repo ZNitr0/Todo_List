@@ -7,6 +7,7 @@ import { Todo } from '../model/todo.model';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  public mode =  'list';
   public todos: Todo[] = [];
   public title: string = 'Lista de Tarefas';
   public form: FormGroup;
@@ -35,6 +36,7 @@ add() {
   this.todos.push({ id, title, done: false, createdAt });
   this.save();
   this.form.reset();
+  this.changeMode('list');
 }
 
 
@@ -77,7 +79,8 @@ add() {
     }
   }
 
-
-
+  changeMode(mode: string) {
+    this.mode = mode;
+  }
 
 }

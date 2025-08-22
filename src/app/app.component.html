@@ -1,32 +1,8 @@
 <div class="container">
-<h1 class="page-title">{{ title }}</h1>
+<h1 class="page-title animated slideInLeft">{{ title }}</h1>
 <p class="page-subtitle">Organize suas tarefas de forma simples e eficiente</p>
 
-
-  <!-- Barra de adicionar (menor e fixa) -->
-  <form [formGroup]="form">
-    <fieldset class="card task composer">
-      <legend class="visually-hidden">Adicionar nova tarefa</legend>
-
-      <div class="composer-row">
-        <input id="title"
-               type="text"
-               class="input input-lg"
-               maxlength="60"
-               placeholder="Digite uma nova tarefa..."
-               formControlName="title" />
-
-        <button class="btn" type="button" [disabled]="form.invalid" (click)="add()">Adicionar</button>
-      </div>
-
-      <small class="error"
-             *ngIf="form.controls.title.invalid && (form.controls.title.dirty || form.controls.title.touched)">
-        Este campo deve conter entre 3 e 60 caracteres
-      </small>
-    </fieldset>
-  </form>
-
-  <ul class="todo-list">
+  <ul class="todo-list" *ngIf="mode=='list'">
     <p *ngIf="todos.length === 0"><small>você ainda não tem tarefas cadastradas!</small></p>
 
     <li *ngFor="let todo of todos; let i = index"
@@ -53,4 +29,47 @@
       </div>
     </li>
   </ul>
+</div>
+
+
+  <!-- Barra de adicionar (menor e fixa) -->
+<div id="modal" *ngIf="mode=='add'" class="animated flipInX">
+  <h1 class="text-center">Nova Tarefa</h1>
+  <form [formGroup]="form" (ngSubmit)="add()">
+    <fieldset class="card task composer">
+
+      <div class="composer-row">
+        <input id="title"
+               type="text"
+               class="input input-lg"
+               maxlength="60"
+               placeholder="Digite uma nova tarefa"
+               formControlName="title" />
+
+<small class="error"
+             *ngIf="form.controls.title.invalid && (form.controls.title.dirty || form.controls.title.touched)">
+        Este campo deve conter entre 3 e 60 caracteres
+      </small>
+
+        <button class="btn" type="submit" [disabled]="form.invalid">Adicionar</button>
+      </div>
+      
+    </fieldset>
+  </form>
+  <br><br>
+</div>
+
+
+<div class="fab-container">
+
+  <button class="btn fab animated fadeInUp" (click)="changeMode('add')" *ngIf="mode=='list'">
+    <i class="fas fa-plus-circle"></i>
+    NOVA TAREFA
+  </button>
+
+  <button class="btn fab animated fadeInUp" (click)="changeMode('list')" *ngIf="mode=='add'">
+    <i class="fas fa-times"></i>
+    CANCELAR
+  </button>
+
 </div>
